@@ -1,0 +1,14 @@
+import boto3
+
+# Create a Route53 client
+client = boto3.client('route53')
+
+# List the first 5 hosted zones
+response = client.list_hosted_zones(MaxItems='5')
+for zone in response['HostedZones']:
+    print(zone['Name'], zone['Id'])
+
+# Create a new hosted zone for a domain
+domain_name = 'example.com.'
+create_response = client.create_hosted_zone(Name=domain_name, CallerReference='unique_string')
+print(create_response['HostedZone']['Id'])
